@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">TetheringHotspot</string>
+    <string name="settings_str">Settings</string>
+    <string name="about_str">About</string>
+    <string name="ttl_is_not_modified">Your TTL isn\'t modified. TTL=64</string>
+    <string name="tts_is_modified">Your TTL is modified. TTL=</string>
+    <string name="way_to_default_ttl_file">/proc/sys/net/ipv4/ip_default_ttl</string>
+    <string name="test">test</string>
+</resources>
