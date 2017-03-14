@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -27,19 +28,19 @@ public class MainActivity extends AppCompatActivity {
     private TextView textView;
     private Process process;
     private BufferedReader reader;
+    private Toast toast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        textView = (TextView) findViewById(R.id.textView);
-
         getSUAccess();
+
         isTtlDefault = ttlIsDefault();
         changeRoungColorByTTLValue();
+        textView = (TextView) findViewById(R.id.textView);
         textView.setText(textViewStringByTTLValue());
-        //textView.setText(Integer.parseInt(getTTLValue())+"");
     }
 
     @Override
@@ -106,7 +107,9 @@ public class MainActivity extends AppCompatActivity {
         try {
             process = Runtime.getRuntime().exec("su");
         } catch (IOException e) {
-
+            toast = Toast.makeText(this, getString(R.string.superuser_toast), Toast.LENGTH_SHORT);
+            finish();
+            System.exit(0);
         }
     }
 
