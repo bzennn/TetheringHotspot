@@ -1,15 +1,10 @@
 package com.example.bzennn.tetheringhotspot;
 
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,10 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -83,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
             }
             isTtlDefault = !isTtlDefault;
             changeRoundColor("#4aff44");
-            textView.setText(textViewStringByTTLValue());
         } else {
             try {
                 process = Runtime.getRuntime().exec("su && echo "+DEFAULT_TTL+" > /proc/sys/net/ipv4/ip_default_ttl");
@@ -92,7 +84,13 @@ public class MainActivity extends AppCompatActivity {
             }
             isTtlDefault = !isTtlDefault;
             changeRoundColor("#ffff4444");
+        }
+
+        try {
+            Thread.sleep(100);
             textView.setText(textViewStringByTTLValue());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 
