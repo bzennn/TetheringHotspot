@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/activityBackground"
     tools:context="com.example.bzennn.tetheringhotspot.MainActivity">
 
     <ImageView
@@ -11,6 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/button_circle"
+        android:elevation="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -23,6 +25,7 @@
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:background="@color/colorButton"
+        android:elevation="4dp"
         android:onClick="onMainButtonClick"
         android:scaleType="centerInside"
         app:layout_constraintBottom_toBottomOf="parent"

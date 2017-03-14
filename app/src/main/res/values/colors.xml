@@ -6,4 +6,5 @@
     <color name="colorButton">#00ff</color>
     <color name="colorButtonBackgroundOff">#ffff4444</color>
     <color name="colorButtonBackgroundOn">#4aff44</color>
+    <color name="activityBackground">#ffffff</color>
 </resources>

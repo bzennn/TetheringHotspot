@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/Theme.AppCompat.Dialog"
+    android:background="@color/activityBackground"
     tools:context="com.example.bzennn.tetheringhotspot.AboutActivity">
 
 </android.support.constraint.ConstraintLayout>
