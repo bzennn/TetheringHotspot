@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout="@layout/activity_settings">
+
+    <PreferenceCategory
+        android:title="@string/network_header"
+        android:key="network_preferences">
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="check_box_preference_1"
+            android:summaryOn="@string/ttl_value_summary_off"
+            android:summaryOff="@string/ttl_value_summary_on"
+            android:textColor="@color/textColor"
+            android:title="Use TTL for" />
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="check_box_preference_2"
+            android:summary="TTL can be max 255"
+            android:textColor="@color/textColor"
+            android:title="Use custom TTL value" />
+
+        <EditTextPreference
+            android:defaultValue="@integer/default_ttl"
+            android:inputType="number"
+            android:key="edit_text_preference_1"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:summary="@string/ttl_summary"
+            android:textColor="@color/textColor"
+            android:title="@string/ttl_title"
+            android:enabled="false"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>

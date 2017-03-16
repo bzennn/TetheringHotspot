@@ -1,8 +1,10 @@
 package com.example.bzennn.tetheringhotspot;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+
+import com.example.bzennn.tetheringhotspot.preferencesFragments.Prefs1Fragment;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -13,6 +15,8 @@ public class SettingsActivity extends AppCompatActivity {
 
         getSupportActionBar().setTitle(R.string.settings_str);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        getFragmentManager().beginTransaction().replace(android.R.id.content, new Prefs1Fragment()).commit();
 
     }
 

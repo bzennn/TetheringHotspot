@@ -1,6 +1,7 @@
 package com.example.bzennn.tetheringhotspot;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -22,13 +23,15 @@ public class MainActivity extends AppCompatActivity {
     private static final int DEFAULT_TTL = 64;
 
     private boolean isTtlDefault = true;
+    private int changableTTLValue = 63;
 
     private Intent intent;
     private ImageView imageView;
-    private TextView textView;
+    private TextView textView, settingsTextView;
     private Process process;
     private BufferedReader reader;
     private Toast toast;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
         changeRoungColorByTTLValue();
         textView = (TextView) findViewById(R.id.textView);
         textView.setText(textViewStringByTTLValue());
+
+        settingsTextView = (TextView) findViewById(R.id.settingTextView);
+        settingsTextView.setText(Integer.toString(changableTTLValue));
     }
 
     @Override
@@ -57,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
 
             case R.id.action_settings:
+                //TODO Settings activity
                 intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
                 return true;
@@ -66,6 +73,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
     }
 
     public void onMainButtonClick(View view) {
@@ -98,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void changeRoundColor(String color){
-        imageView = (ImageView) findViewById(R.id.imageView);
+        imageView = (ImageView) findViewById(R.id.mainButtonBackground);
         GradientDrawable drawable = (GradientDrawable) imageView.getBackground();
         drawable.setColor(Color.parseColor(color));
     }
@@ -146,5 +159,9 @@ public class MainActivity extends AppCompatActivity {
         }else{
             return getString(R.string.tts_is_modified) + getTTLValue();
         }
+    }
+
+    public void onUpdateButtonClick(View view) {
+
     }
 }
