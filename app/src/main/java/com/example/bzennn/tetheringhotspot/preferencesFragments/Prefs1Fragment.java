@@ -7,11 +7,8 @@ import android.preference.PreferenceManager;
 
 import com.example.bzennn.tetheringhotspot.R;
 
-public class Prefs1Fragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener{
-    private int tempTTLValue = 63;
-
+public class Prefs1Fragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
     private SharedPreferences sharedPreferences;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -27,8 +24,8 @@ public class Prefs1Fragment extends PreferenceFragment implements SharedPreferen
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if(key.equals("check_box_preference_2")){
-            if(sharedPreferences.getBoolean("check_box_preference_2", true)){
+        if(key.equals("check_box_preference_2")) {
+            if(sharedPreferences.getBoolean("check_box_preference_2", true)) {
                 findPreference("check_box_preference_1").setEnabled(false);
                 findPreference("edit_text_preference_1").setEnabled(true);
             } else {
@@ -45,8 +42,8 @@ public class Prefs1Fragment extends PreferenceFragment implements SharedPreferen
         sharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
     }
 
-    private void preferecesEnabledOnStart(){
-        if(sharedPreferences.getBoolean("check_box_preference_2", true)){
+    private void preferecesEnabledOnStart() {
+        if(sharedPreferences.getBoolean("check_box_preference_2", true)) {
             findPreference("check_box_preference_1").setEnabled(false);
             findPreference("edit_text_preference_1").setEnabled(true);
         } else {

@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView textView;
     private Process process;
     private BufferedReader reader;
-    //private Toast toast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +43,6 @@ public class MainActivity extends AppCompatActivity {
         changeRoungColorByTTLValue();
         textView = (TextView) findViewById(R.id.textView);
         textView.setText(textViewStringByTTLValue());
-
-
     }
 
     @Override
@@ -109,13 +106,13 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    private void changeRoundColor(String color){
+    private void changeRoundColor(String color) {
         imageView = (ImageView) findViewById(R.id.mainButtonBackground);
         GradientDrawable drawable = (GradientDrawable) imageView.getBackground();
         drawable.setColor(Color.parseColor(color));
     }
 
-    private void getSUAccess(){
+    private void getSUAccess() {
         try {
             process = Runtime.getRuntime().exec("su");
         } catch (IOException e) {
@@ -124,8 +121,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private boolean ttlIsDefault(){
-        if(Integer.parseInt(getTTLValue()) == DEFAULT_TTL){
+    private boolean ttlIsDefault() {
+        if(Integer.parseInt(getTTLValue()) == DEFAULT_TTL) {
             return true;
         } else {
             return false;
@@ -143,18 +140,18 @@ public class MainActivity extends AppCompatActivity {
         return ttl_value;
     }
 
-    private void changeRoungColorByTTLValue(){
+    private void changeRoungColorByTTLValue() {
         if(isTtlDefault){
             changeRoundColor("#ffff4444");
-        }else{
+        } else {
             changeRoundColor("#4aff44");
         }
     }
 
-    private String textViewStringByTTLValue(){
+    private String textViewStringByTTLValue() {
         if(isTtlDefault){
             return getString(R.string.ttl_is_not_modified);
-        }else{
+        } else {
             return getString(R.string.tts_is_modified) + getTTLValue();
         }
     }
@@ -179,4 +176,12 @@ public class MainActivity extends AppCompatActivity {
 
         return temp_ttl;
     }
+
+    /*private void buildNotification() {
+        NotificationCompat.Builder nBuilder =
+                new NotificationCompat.Builder(this)
+                .setSmallIcon()
+                .setContentTitle()
+                .setContentText();
+    }*/
 }
