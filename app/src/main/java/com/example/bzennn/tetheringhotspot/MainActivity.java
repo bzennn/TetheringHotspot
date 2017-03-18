@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,15 +24,14 @@ public class MainActivity extends AppCompatActivity {
     private static final int DEFAULT_TTL = 64;
 
     private boolean isTtlDefault = true;
-    private int changableTTLValue = 63;
+    private int changableTTLValue;
 
     private Intent intent;
     private ImageView imageView;
-    private TextView textView, settingsTextView;
+    private TextView textView;
     private Process process;
     private BufferedReader reader;
     private Toast toast;
-    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +45,7 @@ public class MainActivity extends AppCompatActivity {
         textView = (TextView) findViewById(R.id.textView);
         textView.setText(textViewStringByTTLValue());
 
-        settingsTextView = (TextView) findViewById(R.id.settingTextView);
-        settingsTextView.setText(Integer.toString(changableTTLValue));
+
     }
 
     @Override
@@ -63,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
 
             case R.id.action_settings:
-                //TODO Settings activity
                 intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
                 return true;
@@ -79,12 +77,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        changableTTLValue = loadTTLValuePreference();
     }
 
     public void onMainButtonClick(View view) {
         if(isTtlDefault) {
             try {
-                process = Runtime.getRuntime().exec("su && echo "+63+" > /proc/sys/net/ipv4/ip_default_ttl");
+                process = Runtime.getRuntime().exec("su && echo "+changableTTLValue+" > /proc/sys/net/ipv4/ip_default_ttl");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -161,7 +160,24 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void onUpdateButtonClick(View view) {
+    private int loadTTLValuePreference() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        int temp_ttl = 63;
 
+        if(sharedPreferences.getBoolean("check_box_preference_2", false)) {
+            if(sharedPreferences.getString("edit_text_preference_1", "63") != "") {
+                if(Integer.parseInt(sharedPreferences.getString("edit_text_preference_1", "63")) < 256) {
+                    temp_ttl = Integer.parseInt(sharedPreferences.getString("edit_text_preference_1", "63"));
+                }
+            }
+        } else {
+            if(sharedPreferences.getBoolean("check_box_preference_1", true)) {
+                temp_ttl = 63;
+            } else {
+                temp_ttl = 127;
+            }
+        }
+
+        return temp_ttl;
     }
 }

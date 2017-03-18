@@ -22,7 +22,7 @@
             android:title="Use custom TTL value" />
 
         <EditTextPreference
-            android:defaultValue="@integer/default_ttl"
+            android:defaultValue="@integer/default_ttl_all_devices"
             android:inputType="number"
             android:key="edit_text_preference_1"
             android:selectAllOnFocus="true"

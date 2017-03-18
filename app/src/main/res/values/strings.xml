@@ -16,7 +16,9 @@
     <!-- Preference headers titles -->
     <string name="network_header">Network settings (TTL)</string>
 
-    <integer name="default_ttl">63</integer>
+    <integer name="default_ttl_all_devices">63</integer>
+    <integer name="default_ttl_windows_devices">127</integer>
+
 
     <string name="way_to_default_ttl_file">/proc/sys/net/ipv4/ip_default_ttl</string>
     <string name="title_activity_settings">Settings</string>

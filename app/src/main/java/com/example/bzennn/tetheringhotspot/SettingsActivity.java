@@ -17,7 +17,6 @@ public class SettingsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         getFragmentManager().beginTransaction().replace(android.R.id.content, new Prefs1Fragment()).commit();
-
     }
 
     @Override
