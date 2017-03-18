@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView textView;
     private Process process;
     private BufferedReader reader;
-    private Toast toast;
+    //private Toast toast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,9 +119,8 @@ public class MainActivity extends AppCompatActivity {
         try {
             process = Runtime.getRuntime().exec("su");
         } catch (IOException e) {
-            toast = Toast.makeText(this, getString(R.string.superuser_toast), Toast.LENGTH_SHORT);
+            Toast.makeText(getApplicationContext(), getString(R.string.superuser_toast), Toast.LENGTH_SHORT).show();
             finish();
-            System.exit(0);
         }
     }
 
