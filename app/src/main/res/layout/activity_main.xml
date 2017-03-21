@@ -17,7 +17,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.573" />
+        app:layout_constraintVertical_bias="0.574" />
 
     <ImageButton
         android:id="@+id/mainButton"
@@ -33,7 +33,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.516"
-        app:srcCompat="@drawable/on_button" />
+        app:srcCompat="@drawable/ic_power_on_semicircle_" />
 
     <TextView
         android:id="@+id/textView"

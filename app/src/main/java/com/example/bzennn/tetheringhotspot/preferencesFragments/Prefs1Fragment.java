@@ -13,7 +13,7 @@ public class Prefs1Fragment extends PreferenceFragment implements SharedPreferen
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.xml.app_preferences_ttl);
+        addPreferencesFromResource(R.xml.app_preferences);
 
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());

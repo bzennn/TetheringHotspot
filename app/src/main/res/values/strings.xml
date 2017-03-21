@@ -13,15 +13,30 @@
     <string name="ttl_value_summary_off">all devices (ttl = 63)</string>
     <string name="ttl_value_summary_on">windows devices (ttl = 127)</string>
 
+    <string name="startup_title">Start on boot</string>
+    <string name="startup_summary">TTL will be changed after android boot</string>
+
+    <string name="notifications_title">Notifications</string>
+    <string name="notifications_summary">Notify you when changing TTL</string>
+
+    <string name="startup_ttl_value">Startup TTL value</string>
+
     <!-- Preference headers titles -->
-    <string name="network_header">Network settings (TTL)</string>
+    <string name="main_settings_header">Main settings</string>
+    <string name="main_settings_key">main_settings</string>
+
+    <string name="startup_header">Startup</string>
+    <string name="startup_header_key">startup_preferences</string>
+
     <string name="about_header">About</string>
 
+    <!-- Integers -->
     <integer name="default_ttl_all_devices">63</integer>
     <integer name="default_ttl_windows_devices">127</integer>
 
 
     <string name="way_to_default_ttl_file">/proc/sys/net/ipv4/ip_default_ttl</string>
     <string name="title_activity_settings">Settings</string>
+
 
 </resources>

@@ -2,5 +2,5 @@
 <preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
 
     <header android:fragment="com.example.bzennn.tetheringhotspot.preferencesFragments.Prefs1Fragment"
-            android:title="@string/network_header"/>
+            android:title="@string/main_settings_header"/>
 </preference-headers>
