@@ -3,8 +3,7 @@
     <string name="settings_str">Settings</string>
     <string name="about_str">About</string>
 
-    <string name="ttl_is_not_modified">Your TTL isn\'t modified. TTL=64</string>
-    <string name="tts_is_modified">Your TTL is modified. TTL=</string>
+    <string name="ttl_is_modified">TTL=</string>
     <string name="superuser_toast">Your device is not rooted!</string>
 
     <!-- Fragments titles & summary -->
@@ -16,8 +15,11 @@
     <string name="startup_title">Start on boot</string>
     <string name="startup_summary">TTL will be changed after android boot</string>
 
-    <string name="notifications_title">Notifications</string>
+    <string name="notifications_title">Enable notifications</string>
     <string name="notifications_summary">Notify you when changing TTL</string>
+
+    <string name="default_on_click_title">Default TTL on click</string>
+    <string name="default_on_click_summary">Change TTL to 64 when you click on notification</string>
 
     <string name="startup_ttl_value">Startup TTL value</string>
 
@@ -28,11 +30,18 @@
     <string name="startup_header">Startup</string>
     <string name="startup_header_key">startup_preferences</string>
 
+    <string name="notifications_header">Notifications</string>
+    <string name="notifications_key">notifications_settings</string>
+
     <string name="about_header">About</string>
 
     <!-- Integers -->
     <integer name="default_ttl_all_devices">63</integer>
     <integer name="default_ttl_windows_devices">127</integer>
+
+    <!-- Notifications -->
+    <string name="notification_title">TTL was changed</string>
+    <string name="notification_text">Now your TTL is equal</string>
 
 
     <string name="way_to_default_ttl_file">/proc/sys/net/ipv4/ip_default_ttl</string>

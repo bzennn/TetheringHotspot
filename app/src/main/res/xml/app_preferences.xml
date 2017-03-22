@@ -31,13 +31,6 @@
             android:textColor="@color/textColor"
             android:title="@string/ttl_title"
             android:enabled="false"/>
-
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="check_box_preference_3"
-            android:summary="@string/notifications_summary"
-            android:textColor="@color/textColor"
-            android:title="@string/notifications_title"/>
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -46,7 +39,7 @@
 
         <CheckBoxPreference
             android:defaultValue="false"
-            android:key="check_box_preference_4"
+            android:key="check_box_preference_3"
             android:summary="@string/startup_summary"
             android:textColor="@color/textColor"
             android:title="@string/startup_title"/>
@@ -60,5 +53,25 @@
             android:singleLine="true"
             android:textColor="@color/textColor"
             android:title="@string/startup_ttl_value" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/notifications_header"
+        android:key="@string/notifications_key">
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="check_box_preference_4"
+            android:summary="@string/notifications_summary"
+            android:textColor="@color/textColor"
+            android:title="@string/notifications_title"/>
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="check_box_preference_5"
+            android:summary="@string/default_on_click_summary"
+            android:textColor="@color/textColor"
+            android:title="@string/default_on_click_title"
+            android:enabled="false"/>
     </PreferenceCategory>
 </PreferenceScreen>

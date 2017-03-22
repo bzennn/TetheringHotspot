@@ -1,12 +1,20 @@
 package com.example.bzennn.tetheringhotspot;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.NotificationCompat;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -43,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
         changeRoungColorByTTLValue();
         textView = (TextView) findViewById(R.id.textView);
         textView.setText(textViewStringByTTLValue());
+
+        setDefaultTtlOnNotificationClick();
     }
 
     @Override
@@ -77,31 +87,23 @@ public class MainActivity extends AppCompatActivity {
         changableTTLValue = loadTTLValuePreference();
     }
 
+    /*
+        Main button handler
+     */
+
     public void onMainButtonClick(View view) {
         if(isTtlDefault) {
-            try {
-                process = Runtime.getRuntime().exec("su && echo "+changableTTLValue+" > /proc/sys/net/ipv4/ip_default_ttl");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            changeTTL(changableTTLValue);
             isTtlDefault = !isTtlDefault;
             changeRoundColor("#4aff44");
         } else {
-            try {
-                process = Runtime.getRuntime().exec("su && echo "+DEFAULT_TTL+" > /proc/sys/net/ipv4/ip_default_ttl");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            changeTTL(DEFAULT_TTL);
             isTtlDefault = !isTtlDefault;
             changeRoundColor("#ffff4444");
         }
 
-        try {
-            Thread.sleep(100);
-            textView.setText(textViewStringByTTLValue());
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        delay(100);
+        textView.setText(textViewStringByTTLValue());
     }
 
 
@@ -110,15 +112,6 @@ public class MainActivity extends AppCompatActivity {
         imageView = (ImageView) findViewById(R.id.mainButtonBackground);
         GradientDrawable drawable = (GradientDrawable) imageView.getBackground();
         drawable.setColor(Color.parseColor(color));
-    }
-
-    private void getSUAccess() {
-        try {
-            process = Runtime.getRuntime().exec("su");
-        } catch (IOException e) {
-            Toast.makeText(getApplicationContext(), getString(R.string.superuser_toast), Toast.LENGTH_SHORT).show();
-            finish();
-        }
     }
 
     private boolean ttlIsDefault() {
@@ -150,9 +143,9 @@ public class MainActivity extends AppCompatActivity {
 
     private String textViewStringByTTLValue() {
         if(isTtlDefault){
-            return getString(R.string.ttl_is_not_modified);
+            return getString(R.string.ttl_is_modified) + DEFAULT_TTL;
         } else {
-            return getString(R.string.tts_is_modified) + getTTLValue();
+            return getString(R.string.ttl_is_modified) + getTTLValue();
         }
     }
 
@@ -177,11 +170,97 @@ public class MainActivity extends AppCompatActivity {
         return temp_ttl;
     }
 
-    /*private void buildNotification() {
+    private void delay(int millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void changeTTL(int ttlValue) {
+        try {
+            process = Runtime.getRuntime().exec("su && echo "+ttlValue+" > /proc/sys/net/ipv4/ip_default_ttl");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if(ttlValue != DEFAULT_TTL) {
+            notifyByPreference();
+        }
+    }
+
+    /*
+        Notifications
+     */
+
+    private boolean loadNotificationsPreference() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        if(sharedPreferences.getBoolean("check_box_preference_4", true)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean loadNotificationsDefaultOnClickPreference() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        if(sharedPreferences.getBoolean("check_box_preference_5", true)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private void notifyByPreference() {
+        if(loadNotificationsPreference()) {
+            buildNotification();
+        }
+    }
+
+    private void setDefaultTtlOnNotificationClick() {
+        if(getIntent().hasExtra("callDefault")) {
+            changeTTL(DEFAULT_TTL);
+            delay(100);
+            changeRoundColor("#ffff4444");
+            textView.setText(textViewStringByTTLValue());
+            isTtlDefault = !isTtlDefault;
+        }
+    }
+
+    private void buildNotification() {
         NotificationCompat.Builder nBuilder =
-                new NotificationCompat.Builder(this)
-                .setSmallIcon()
-                .setContentTitle()
-                .setContentText();
-    }*/
+                (NotificationCompat.Builder) new NotificationCompat.Builder(this)
+                .setSmallIcon(R.drawable.ic_notifications_black_24dp)
+                .setContentTitle(getString(R.string.notification_title))
+                .setContentText(getString(R.string.notification_text)+" "+changableTTLValue);
+
+        nBuilder.setAutoCancel(true);
+
+        Intent resultIntent = new Intent(this, MainActivity.class);
+        if(loadNotificationsDefaultOnClickPreference()) {
+            resultIntent.putExtra("callDefault", true);
+        }
+
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        stackBuilder.addParentStack(MainActivity.class);
+        stackBuilder.addNextIntent(resultIntent);
+
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+        nBuilder.setContentIntent(resultPendingIntent);
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(0, nBuilder.build());
+    }
+
+    private void getSUAccess() {
+        try {
+            process = Runtime.getRuntime().exec("su");
+        } catch (IOException e) {
+            Toast.makeText(getApplicationContext(), getString(R.string.superuser_toast), Toast.LENGTH_SHORT).show();
+            finish();
+        }
+    }
 }

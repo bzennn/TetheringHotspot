@@ -33,6 +33,14 @@ public class Prefs1Fragment extends PreferenceFragment implements SharedPreferen
                 findPreference("edit_text_preference_1").setEnabled(false);
             }
         }
+
+        if(key.equals("check_box_preference_4")) {
+            if(sharedPreferences.getBoolean("check_box_preference_4", true)) {
+                findPreference("check_box_preference_5").setEnabled(true);
+            } else {
+                findPreference("check_box_preference_5").setEnabled(false);
+            }
+        }
     }
 
     @Override
@@ -49,6 +57,12 @@ public class Prefs1Fragment extends PreferenceFragment implements SharedPreferen
         } else {
             findPreference("check_box_preference_1").setEnabled(true);
             findPreference("edit_text_preference_1").setEnabled(false);
+        }
+
+        if(sharedPreferences.getBoolean("check_box_preference_4", true)) {
+            findPreference("check_box_preference_5").setEnabled(true);
+        } else {
+            findPreference("check_box_preference_5").setEnabled(false);
         }
     }
 }
