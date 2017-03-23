@@ -31,6 +31,13 @@
             android:textColor="@color/textColor"
             android:title="@string/ttl_title"
             android:enabled="false"/>
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="reconnect_preference"
+            android:summary="@string/reconnect_summary"
+            android:textColor="@color/textColor"
+            android:title="@string/reconnect_title"/>
     </PreferenceCategory>
 
     <PreferenceCategory

@@ -1,17 +1,16 @@
 package com.example.bzennn.tetheringhotspot;
 
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.NotificationCompat;
@@ -48,9 +47,8 @@ public class MainActivity extends AppCompatActivity {
         getSUAccess();
 
         isTtlDefault = ttlIsDefault();
-        changeRoungColorByTTLValue();
+
         textView = (TextView) findViewById(R.id.textView);
-        textView.setText(textViewStringByTTLValue());
 
         setDefaultTtlOnNotificationClick();
     }
@@ -85,6 +83,8 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
         changableTTLValue = loadTTLValuePreference();
+        changeRoungColorByTTLValue();
+        textView.setText(textViewStringByTTLValue());
     }
 
     /*
@@ -104,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
         delay(100);
         textView.setText(textViewStringByTTLValue());
+        reconnectNetwork();
     }
 
 
@@ -149,27 +150,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private int loadTTLValuePreference() {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        int temp_ttl = 63;
-
-        if(sharedPreferences.getBoolean("check_box_preference_2", false)) {
-            if(sharedPreferences.getString("edit_text_preference_1", "63") != "") {
-                if(Integer.parseInt(sharedPreferences.getString("edit_text_preference_1", "63")) < 256) {
-                    temp_ttl = Integer.parseInt(sharedPreferences.getString("edit_text_preference_1", "63"));
-                }
-            }
-        } else {
-            if(sharedPreferences.getBoolean("check_box_preference_1", true)) {
-                temp_ttl = 63;
-            } else {
-                temp_ttl = 127;
-            }
-        }
-
-        return temp_ttl;
-    }
-
     private void delay(int millis) {
         try {
             Thread.sleep(millis);
@@ -178,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void changeTTL(int ttlValue) {
+    public void changeTTL(int ttlValue) {
         try {
             process = Runtime.getRuntime().exec("su && echo "+ttlValue+" > /proc/sys/net/ipv4/ip_default_ttl");
         } catch (IOException e) {
@@ -190,31 +170,42 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void reconnectNetwork() {
+        toggleFlightMode(true);
+        delay(1000);
+        toggleFlightMode(false);
+        //delay(100);
+        //toggleFlightMode(false);
+    }
+
+
+    private void toggleFlightMode(boolean state) {
+        if(loadReconnectPreference()) {
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                if(state) {
+                    try {
+                        process = Runtime.getRuntime().exec("su && settings put global airplane_mode_on 1 && am broadcast -a android.intent.action.AIRPLANE_MODE --ez state true");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    try {
+                        process = Runtime.getRuntime().exec("su && settings put global airplane_mode_on 0 && am broadcast -a android.intent.action.AIRPLANE_MODE --ez state false");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            } else {
+                Settings.System.putInt(this.getContentResolver(), Settings.System.AIRPLANE_MODE_ON, state ? 0 : 1);
+            }
+        }
+    }
+
     /*
         Notifications
      */
 
-    private boolean loadNotificationsPreference() {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-
-        if(sharedPreferences.getBoolean("check_box_preference_4", true)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    private boolean loadNotificationsDefaultOnClickPreference() {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-
-        if(sharedPreferences.getBoolean("check_box_preference_5", true)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    private void notifyByPreference() {
+    public void notifyByPreference() {
         if(loadNotificationsPreference()) {
             buildNotification();
         }
@@ -255,6 +246,63 @@ public class MainActivity extends AppCompatActivity {
         notificationManager.notify(0, nBuilder.build());
     }
 
+    /*
+        Load preferences
+     */
+    private boolean loadNotificationsPreference() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        if(sharedPreferences.getBoolean("check_box_preference_4", true)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean loadNotificationsDefaultOnClickPreference() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        if(sharedPreferences.getBoolean("check_box_preference_5", true)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private int loadTTLValuePreference() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        int temp_ttl = 63;
+
+        if(sharedPreferences.getBoolean("check_box_preference_2", false)) {
+            if(sharedPreferences.getString("edit_text_preference_1", "63") != "") {
+                if(Integer.parseInt(sharedPreferences.getString("edit_text_preference_1", "63")) < 256) {
+                    temp_ttl = Integer.parseInt(sharedPreferences.getString("edit_text_preference_1", "63"));
+                }
+            }
+        } else {
+            if(sharedPreferences.getBoolean("check_box_preference_1", true)) {
+                temp_ttl = 63;
+            } else {
+                temp_ttl = 127;
+            }
+        }
+
+        return temp_ttl;
+    }
+
+    private boolean loadReconnectPreference() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        if(sharedPreferences.getBoolean("reconnect_preference", true)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /*
+        Utilities
+     */
     private void getSUAccess() {
         try {
             process = Runtime.getRuntime().exec("su");

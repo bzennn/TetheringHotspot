@@ -21,6 +21,9 @@
     <string name="default_on_click_title">Default TTL on click</string>
     <string name="default_on_click_summary">Change TTL to 64 when you click on notification</string>
 
+    <string name="reconnect_title">Reconnect</string>
+    <string name="reconnect_summary">Reconnect after change TTL</string>
+
     <string name="startup_ttl_value">Startup TTL value</string>
 
     <!-- Preference headers titles -->
