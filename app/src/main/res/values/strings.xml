@@ -3,7 +3,7 @@
     <string name="settings_str">Settings</string>
     <string name="about_str">About</string>
 
-    <string name="ttl_is_modified">TTL=</string>
+    <string name="ttl_is_modified">Current TTL=</string>
     <string name="superuser_toast">Your device is not rooted!</string>
 
     <!-- Fragments titles & summary -->
@@ -21,8 +21,11 @@
     <string name="default_on_click_title">Default TTL on click</string>
     <string name="default_on_click_summary">Change TTL to 64 when you click on notification</string>
 
-    <string name="reconnect_title">Reconnect</string>
+    <string name="reconnect_title">Auto reconnect</string>
     <string name="reconnect_summary">Reconnect after change TTL</string>
+
+    <string name="hotspot_preferences_title">Hotspot settings</string>
+    <string name="hotspot_pregerences_summary">Open wifi hotspot settings after change TTL</string>
 
     <string name="startup_ttl_value">Startup TTL value</string>
 
@@ -49,6 +52,8 @@
 
     <string name="way_to_default_ttl_file">/proc/sys/net/ipv4/ip_default_ttl</string>
     <string name="title_activity_settings">Settings</string>
+    
+    <string name="banner_ad_unit_id">ca-app-pub-4687335904240792~8907355463</string>
 
 
 </resources>

@@ -38,6 +38,14 @@
             android:summary="@string/reconnect_summary"
             android:textColor="@color/textColor"
             android:title="@string/reconnect_title"/>
+<!--
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="open_hotspot_preferences"
+            android:summary="@string/hotspot_pregerences_summary"
+            android:textColor="@color/textColor"
+            android:title="@string/hotspot_preferences_title"/>
+        -->
     </PreferenceCategory>
 
     <PreferenceCategory

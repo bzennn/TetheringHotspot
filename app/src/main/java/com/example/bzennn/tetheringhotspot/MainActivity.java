@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Intent intent;
     private ImageView imageView;
-    private TextView textView;
+    private TextView textView, infTextView;
     private Process process;
     private BufferedReader reader;
 
@@ -49,8 +49,14 @@ public class MainActivity extends AppCompatActivity {
         isTtlDefault = ttlIsDefault();
 
         textView = (TextView) findViewById(R.id.textView);
+        infTextView = (TextView) findViewById(R.id.infTextView);
 
         setDefaultTtlOnNotificationClick();
+
+        /*MobileAds.initialize(getApplicationContext(), "ca-app-pub-4687335904240792~8907355463");
+        AdView mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);*/
     }
 
     @Override
@@ -83,8 +89,9 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
         changableTTLValue = loadTTLValuePreference();
-        changeRoungColorByTTLValue();
         textView.setText(textViewStringByTTLValue());
+        infTextView.setText("Changable TTL = "+changableTTLValue+"\nFor return to default value, tap again."+"\nFor change changable value go to settings.");
+        changeRoungColorByTTLValue();
     }
 
     /*
@@ -218,6 +225,7 @@ public class MainActivity extends AppCompatActivity {
             changeRoundColor("#ffff4444");
             textView.setText(textViewStringByTTLValue());
             isTtlDefault = !isTtlDefault;
+            reconnectNetwork();
         }
     }
 
