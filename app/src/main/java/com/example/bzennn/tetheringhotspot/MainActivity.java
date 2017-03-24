@@ -103,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
             changeTTL(changableTTLValue);
             isTtlDefault = !isTtlDefault;
             changeRoundColor("#4aff44");
+            openHotspotSettingsByPreference();
         } else {
             changeTTL(DEFAULT_TTL);
             isTtlDefault = !isTtlDefault;
@@ -208,6 +209,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void openHotspotSettingsByPreference() {
+        if(loadHotspotSettingsOpenPreference()) {
+            Intent hotspotSettingsIntent = new Intent();
+            hotspotSettingsIntent.setClassName("com.android.settings", "com.android.settings.TetherSettings");
+            startActivityForResult(hotspotSettingsIntent, 0);
+        }
+    }
+
     /*
         Notifications
      */
@@ -302,6 +311,16 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         if(sharedPreferences.getBoolean("reconnect_preference", true)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean loadHotspotSettingsOpenPreference() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        if(sharedPreferences.getBoolean("open_hotspot_preferences", true)) {
             return true;
         } else {
             return false;

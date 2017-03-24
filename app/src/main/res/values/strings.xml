@@ -25,7 +25,7 @@
     <string name="reconnect_summary">Reconnect after change TTL</string>
 
     <string name="hotspot_preferences_title">Hotspot settings</string>
-    <string name="hotspot_pregerences_summary">Open wifi hotspot settings after change TTL</string>
+    <string name="hotspot_pregerences_summary">Open tethering and portable hotspot settings after change TTL</string>
 
     <string name="startup_ttl_value">Startup TTL value</string>
 
