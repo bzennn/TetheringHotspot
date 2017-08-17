@@ -47,6 +47,7 @@
             android:title="@string/hotspot_preferences_title"/>
     </PreferenceCategory>
 
+    <!--
     <PreferenceCategory
         android:title="@string/startup_header"
         android:key="@string/startup_header_key">
@@ -68,6 +69,7 @@
             android:textColor="@color/textColor"
             android:title="@string/startup_ttl_value" />
     </PreferenceCategory>
+    -->
 
     <PreferenceCategory
         android:title="@string/notifications_header"
